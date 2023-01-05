@@ -63,6 +63,15 @@ app.get("/people", async (req, res) => {
     }
 })
 
+// Update Route
+app.put("/people/:id", async (req, res) => {
+    try {
+        res.json(await People.findByIdAndUpdate(req.params.id, req.body, { new: true }))
+    } catch {
+        res.status(400).json(error)
+    }
+})
+
 // Create Route
 app.post("/people", async (req, res) => {
     try{
@@ -71,7 +80,6 @@ app.post("/people", async (req, res) => {
         res.status(400).json(error)
     }
 })
-
 
 
 // turn server on
