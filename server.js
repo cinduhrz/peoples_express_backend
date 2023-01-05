@@ -20,10 +20,7 @@ const app = express()
 //---------------------------------------------
 
 // Connect to DB
-mongoose.connect(DATABASE_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-})
+mongoose.connect(DATABASE_URL)
 
 // logic to check mongoose connection
 mongoose.connection
@@ -49,6 +46,7 @@ const People = mongoose.model("People", PeopleSchema)
 // Middleware
 app.use(cors())
 app.use(morgan("dev"))
+app.use(express.json())
 
 // Routes
 app.get("/", (req, res) => {
@@ -64,6 +62,16 @@ app.get("/people", async (req, res) => {
         res.status(400).json(error)
     }
 })
+
+// Create Route
+app.post("/people", async (req, res) => {
+    try{
+        res.json(await People.create(req.body))
+    } catch(error) {
+        res.status(400).json(error)
+    }
+})
+
 
 
 // turn server on
