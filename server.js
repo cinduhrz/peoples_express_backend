@@ -63,11 +63,20 @@ app.get("/people", async (req, res) => {
     }
 })
 
+// Delete Route
+app.delete("/people/:id", async (req, res) => {
+    try {
+        res.json(await People.findByIdAndDelete(req.params.id))
+    } catch(error) {
+        res.status(400).json(error)
+    }
+})
+
 // Update Route
 app.put("/people/:id", async (req, res) => {
     try {
         res.json(await People.findByIdAndUpdate(req.params.id, req.body, { new: true }))
-    } catch {
+    } catch(error) {
         res.status(400).json(error)
     }
 })
