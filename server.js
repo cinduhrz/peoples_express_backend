@@ -90,6 +90,14 @@ app.post("/people", async (req, res) => {
     }
 })
 
+// Show Route
+app.get("/people/:id", async (req, res) => {
+    try{
+        res.json(await People.findById(req.params.id))
+    } catch(error) {
+        res.status(400).json(error)
+    }
+})
 
 // turn server on
 app.listen(PORT, () => {
